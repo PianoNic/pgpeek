@@ -13,9 +13,11 @@ A single-container Postgres debugging UI. Python (FastAPI + asyncpg) backend, Re
 
 ## Quick start
 
+Pull the prebuilt image from Docker Hub:
+
 ```bash
 cp .env.example .env
-docker compose up --build
+docker compose up
 ```
 
 Then open http://localhost:8081. The bundled `postgres` service is reachable inside the compose network at `postgres:5432` and externally at `localhost:5432`.
@@ -23,8 +25,18 @@ Then open http://localhost:8081. The bundled `postgres` service is reachable ins
 To point at an existing database instead of the bundled one, set `DATABASE_URL` in `.env` and run just the `pgpeek` service:
 
 ```bash
-docker compose up --build pgpeek
+docker compose up pgpeek
 ```
+
+Or run pgpeek standalone without compose:
+
+```bash
+docker run -p 8081:8000 \
+  -e DATABASE_URL=postgres://user:pass@host:5432/db \
+  pianonic/pgpeek:latest
+```
+
+To build locally from source instead of pulling, edit `docker-compose.yml` (swap `image:` for `build: .`) and run `docker compose up --build`.
 
 ## Env vars
 | Var | Default | Purpose |

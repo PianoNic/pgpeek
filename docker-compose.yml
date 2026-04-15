@@ -17,7 +17,9 @@ services:
       retries: 10
 
   pgpeek:
-    build: .
+    image: pianonic/pgpeek:latest
+    # To build locally instead of pulling, comment the line above and uncomment:
+    # build: .
     restart: unless-stopped
     depends_on:
       postgres:
